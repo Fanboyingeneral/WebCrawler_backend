@@ -1,14 +1,17 @@
 const express = require('express');
 const cors = require('cors');
 const crawlRoutes = require('./routes/crawlRoutes');
+const connectDB = require('./db');
 
 const app = express();
 const PORT = 5000;
 
-app.use(cors()); // Allow requests from frontend
-app.use(express.json()); // Parse JSON bodies
+app.use(cors());
+app.use(express.json());
 
-app.use('/api/crawl', crawlRoutes); // Route for crawl operations
+connectDB();  // Connect to MongoDB
+
+app.use('/api/crawl', crawlRoutes);
 
 app.listen(PORT, () => {
   console.log(`Backend server running on http://localhost:${PORT}`);
