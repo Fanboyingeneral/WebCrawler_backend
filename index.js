@@ -7,7 +7,7 @@ const cron = require('node-cron');
 const { runScheduledTasks } = require('./controllers/crawlController');
 
 const app = express();
-const PORT = 5000;
+const BACKEND_PORT = process.env.BACKEND_PORT;
 
 app.use(cors());
 app.use(express.json({ limit: '50mb' }));
@@ -23,6 +23,6 @@ cron.schedule('* * * * *', async () => {
     await runScheduledTasks();
 });
 
-app.listen(PORT, () => {
-    console.log(`Backend server running on http://localhost:${PORT}`);
+app.listen(BACKEND_PORT, () => {
+    console.log(`Backend server running on http://localhost:${BACKEND_PORT}`);
 });

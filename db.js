@@ -22,9 +22,11 @@
 // FOR LOCAL DATABASE CONNECTION
 const mongoose = require('mongoose');
 
+const MONGO_PORT = process.env.MONGO_PORT;
+
 const connectDB = async () => {
   try {
-    await mongoose.connect('mongodb://mongodb_full:27017/', {  // 'mongodb_full' is the name of MongoDB service in Docker Compose
+    await mongoose.connect(`mongodb://mongodb_full:${MONGO_PORT}/`, {  // 'mongodb_full' is the name of MongoDB service in Docker Compose
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });

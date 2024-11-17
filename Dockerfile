@@ -7,6 +7,9 @@ RUN npm install
 
 COPY . .
 
-EXPOSE 5000
+# Default port set via ENV, can be overridden at runtime
+ENV BACKEND_PORT 7100
 
-CMD ["node", "index.js"]
+EXPOSE ${PORT}
+
+CMD ["sh", "-c", "node index.js --port=${BACKEND_PORT}"]

@@ -2,6 +2,8 @@ const axios = require('axios');
 const CrawlData = require('../models/CrawlData');
 const ScheduledCrawl = require('../models/ScheduledCrawl');
 
+const CRAWLER_ENGINE_PORT = process.env.CRAWLER_ENGINE_PORT;
+
 const startCrawl = async (req, res) => {
   const { url, maxUrls, respectRobotFlag } = req.body;
   console.log("*********Respect Robot Flag: ", respectRobotFlag);
@@ -11,7 +13,7 @@ const startCrawl = async (req, res) => {
     const newCrawlId = lastCrawl ? lastCrawl.crawl_id + 1 : 1;  // If no entries, start at 1
 
     // Call the crawler engine
-    const response = await axios.post('http://crawler_engine:8000/crawl', { url, maxUrls, respectRobotFlag });
+    const response = await axios.post(`http://crawler_engine:${CRAWLER_ENGINE_PORT}/crawl`, { url, maxUrls, respectRobotFlag });
     
     // Log response data for debugging
     console.log('Crawl response data:', response.data);
@@ -59,7 +61,7 @@ const startScheduledCrawl = async (scheduledCrawl) => {
     const newCrawlId = lastCrawl ? lastCrawl.crawl_id + 1 : 1;  // If no entries, start at 1
 
     // Call the crawler engine
-    const response = await axios.post('http://crawler_engine:8000/crawl', { url, maxUrls, respectRobotFlag });
+    const response = await axios.post(`http://crawler_engine:${CRAWLER_ENGINE_PORT}/crawl`, { url, maxUrls, respectRobotFlag });
 
     // Log response data for debugging
     console.log('Crawl response data:', response.data);
